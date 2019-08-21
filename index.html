@@ -62,6 +62,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-对于动态规划思想的理解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/21/对于动态规划思想的理解/" class="article-date">
+  <time datetime="2019-08-20T22:14:22.000Z" itemprop="datePublished">2019-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/21/对于动态规划思想的理解/">对于动态规划思想的理解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："><a href="#一、动态规划适用的问题特点（后续会通过例子解释这些特点）：" class="headerlink" title="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："></a>一、动态规划适用的问题特点（后续会通过例子解释这些特点）：</h1><h2 id="1-问题是求某个最优解"><a href="#1-问题是求某个最优解" class="headerlink" title="1. 问题是求某个最优解"></a>1. 问题是求某个最优解</h2><h2 id="2-问题具有最优子结构性质，即状态dp-n-的最优解有赖于dp-n-k-的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。"><a href="#2-问题具有最优子结构性质，即状态dp-n-的最优解有赖于dp-n-k-的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。" class="headerlink" title="2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。"></a>2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。</h2><h2 id="3-从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题"><a href="#3-从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题" class="headerlink" title="3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题"></a>3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题</h2><h1 id="二、动态规划的两种想法："><a href="#二、动态规划的两种想法：" class="headerlink" title="二、动态规划的两种想法："></a>二、动态规划的两种想法：</h1><h2 id="1-自顶向下解决问题"><a href="#1-自顶向下解决问题" class="headerlink" title="1. 自顶向下解决问题"></a>1. 自顶向下解决问题</h2><p>从最开始的状态开始，不同的决策最后会造成不同的系统状态。这样的想法像一个二叉树一样，下图展示的是每个状态有两种决策的情况，可以看出这样的方法在<strong>写程序的时候可以考虑递归完成</strong>。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png" alt="类似二叉树的自顶向下的方法"></p>
+<p>图中展示了每个状态通过不同的决策最后达到“叶子节点”（这并不是一个真的二叉树，挪用叶子节点的概念表达系统的最后一个状态）。这里可以看出问题有<strong>重复子结构</strong>，例如当element[0]做出决策后，element[1]会通过会继续想下做决策，最后返回给element[0]的决策者一个以element[1]当前状态为起始的最优解。当element[0]再次做出决策2时，因为<strong>问题具有最优子结构</strong>，会发现这时需要的就是element[1]为起始的最优解，而这个最优解已经在这个二叉树左侧分支计算过了，这时直接用这个最优解就可以了。这个最优解可以通过“记忆簿”记录下来。而element[0]就可以比较决策1和2哪个最优了。 </p>
+<h2 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h2><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。如n=1时，最优解是dp[1]，当n=2的时候，dp[2]可以根据dp[1]的值来比较哪种决策最佳。dp[2]通过dp[1]的到最优解的过程就是根据一个需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
+<p>红色的线表明该状态根据前面的状态做出的最优决策（具体什么决策是假设），最后得到整体最优解为，决策1-&gt;决策2-&gt;决策1-&gt;叶子节点决策。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzldijr90001u4la3dmmqdbt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-最大子序和" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/19/最大子序和/" class="article-date">
@@ -174,7 +214,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/19/最大子序和/" data-id="cjzkcj7vg00016slakiizdsn7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/19/最大子序和/" data-id="cjzldijrc0002u4lam9c688bn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -223,7 +263,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/16/hello-world/" data-id="cjzkcj7v900006slakya1ogqh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/16/hello-world/" data-id="cjzldijr30000u4lafjn4mnp0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -262,6 +302,10 @@ public:
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/08/21/对于动态规划思想的理解/">对于动态规划思想的理解</a>
+          </li>
         
           <li>
             <a href="/2019/08/19/最大子序和/">最大子序和</a>

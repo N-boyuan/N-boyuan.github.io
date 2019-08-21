@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>对于动态规划思想的理解 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）：1. 问题是求某个最优解2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题二、动态规划的两种想法：1. 自顶向下解决问题从最开始的状态开始，不同的决策最后会造成不同的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对于动态规划思想的理解">
+<meta property="og:url" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）：1. 问题是求某个最优解2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题二、动态规划的两种想法：1. 自顶向下解决问题从最开始的状态开始，不同的决策最后会造成不同的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png">
+<meta property="og:updated_time" content="2019-08-21T14:48:24.156Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对于动态规划思想的理解">
+<meta name="twitter:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）：1. 问题是求某个最优解2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题二、动态规划的两种想法：1. 自顶向下解决问题从最开始的状态开始，不同的决策最后会造成不同的">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-对于动态规划思想的理解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/21/对于动态规划思想的理解/" class="article-date">
+  <time datetime="2019-08-20T22:14:22.000Z" itemprop="datePublished">2019-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      对于动态规划思想的理解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："><a href="#一、动态规划适用的问题特点（后续会通过例子解释这些特点）：" class="headerlink" title="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："></a>一、动态规划适用的问题特点（后续会通过例子解释这些特点）：</h1><h2 id="1-问题是求某个最优解"><a href="#1-问题是求某个最优解" class="headerlink" title="1. 问题是求某个最优解"></a>1. 问题是求某个最优解</h2><h2 id="2-问题具有最优子结构性质，即状态dp-n-的最优解有赖于dp-n-k-的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。"><a href="#2-问题具有最优子结构性质，即状态dp-n-的最优解有赖于dp-n-k-的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。" class="headerlink" title="2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。"></a>2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。</h2><h2 id="3-从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题"><a href="#3-从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题" class="headerlink" title="3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题"></a>3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题</h2><h1 id="二、动态规划的两种想法："><a href="#二、动态规划的两种想法：" class="headerlink" title="二、动态规划的两种想法："></a>二、动态规划的两种想法：</h1><h2 id="1-自顶向下解决问题"><a href="#1-自顶向下解决问题" class="headerlink" title="1. 自顶向下解决问题"></a>1. 自顶向下解决问题</h2><p>从最开始的状态开始，不同的决策最后会造成不同的系统状态。这样的想法像一个二叉树一样，下图展示的是每个状态有两种决策的情况，可以看出这样的方法在<strong>写程序的时候可以考虑递归完成</strong>。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png" alt="类似二叉树的自顶向下的方法"></p>
+<p>图中展示了每个状态通过不同的决策最后达到“叶子节点”（这并不是一个真的二叉树，挪用叶子节点的概念表达系统的最后一个状态）。这里可以看出问题有<strong>重复子结构</strong>，例如当element[0]做出决策后，element[1]会通过会继续想下做决策，最后返回给element[0]的决策者一个以element[1]当前状态为起始的最优解。当element[0]再次做出决策2时，因为<strong>问题具有最优子结构</strong>，会发现这时需要的就是element[1]为起始的最优解，而这个最优解已经在这个二叉树左侧分支计算过了，这时直接用这个最优解就可以了。这个最优解可以通过“记忆簿”记录下来。而element[0]就可以比较决策1和2哪个最优了。 </p>
+<h2 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h2><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。如n=1时，最优解是dp[1]，当n=2的时候，dp[2]可以根据dp[1]的值来比较哪种决策最佳。dp[2]通过dp[1]的到最优解的过程就是根据一个需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
+<p>红色的线表明该状态根据前面的状态做出的最优决策（具体什么决策是假设），最后得到整体最优解为，决策1-&gt;决策2-&gt;决策1-&gt;叶子节点决策。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzldijr90001u4la3dmmqdbt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/19/最大子序和/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">最大子序和</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/21/对于动态规划思想的理解/">对于动态规划思想的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/19/最大子序和/">最大子序和</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/16/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
