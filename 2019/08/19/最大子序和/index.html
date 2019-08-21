@@ -7,19 +7,19 @@
   
   <title>最大子序和 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。  样 例 ：-2, 11, -4, 13, -5, -2显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20  此题可以通过动态规划的思想解决，以下为两种动态规划的方法。 方法1：自上而下的动态规划  自序和子序首和子序尾以及子序的和三个">
+  <meta name="description" content="*题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。 * 样 例 ：-2, 11, -4, 13, -5, -2显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20  此题可以通过动态规划的思想解决，以下为两种动态规划的方法。 *方法1：自上而下的动态规划 * 自序和子序首和子序尾以及子序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最大子序和">
 <meta property="og:url" content="http://yoursite.com/2019/08/19/最大子序和/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。  样 例 ：-2, 11, -4, 13, -5, -2显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20  此题可以通过动态规划的思想解决，以下为两种动态规划的方法。 方法1：自上而下的动态规划  自序和子序首和子序尾以及子序的和三个">
+<meta property="og:description" content="*题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。 * 样 例 ：-2, 11, -4, 13, -5, -2显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20  此题可以通过动态规划的思想解决，以下为两种动态规划的方法。 *方法1：自上而下的动态规划 * 自序和子序首和子序尾以及子序">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/08/19/最大子序和/images/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/picture1.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/19/最大子序和/images/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/picture2.png">
-<meta property="og:updated_time" content="2019-08-20T15:14:40.591Z">
+<meta property="og:updated_time" content="2019-08-21T20:41:07.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大子序和">
-<meta name="twitter:description" content="题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。  样 例 ：-2, 11, -4, 13, -5, -2显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20  此题可以通过动态规划的思想解决，以下为两种动态规划的方法。 方法1：自上而下的动态规划  自序和子序首和子序尾以及子序的和三个">
+<meta name="twitter:description" content="*题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。 * 样 例 ：-2, 11, -4, 13, -5, -2显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20  此题可以通过动态规划的思想解决，以下为两种动态规划的方法。 *方法1：自上而下的动态规划 * 自序和子序首和子序尾以及子序">
 <meta name="twitter:image" content="http://yoursite.com/2019/08/19/最大子序和/images/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/picture1.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -89,10 +89,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。 </p>
+        <p>*<em>题目：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。 *</em></p>
 <p>样 例 ：<br>-2, 11, -4, 13, -5, -2<br>显 然 11+（-4)+13=20 为 和 最 大 的 选 取 情 况 ， 因 此 最 大 和 为 20 </p>
 <p>此题可以通过动态规划的思想解决，以下为两种动态规划的方法。</p>
-<p>方法1：自上而下的动态规划 </p>
+<p>*<em>方法1：自上而下的动态规划 *</em></p>
 <p>自序和子序首和子序尾以及子序的和三个要素，下面这个思路是自上而下的带记忆簿的动态规划。table[i]记录的是状态处于子序中的i节点后的最大子序和（nums中每个元素有两个状态，一个是目前就处在子序中，另一个是目前没有处于子序中，即还没有定下子序首）。lock记录是否处于子序的状态，lock=0表示还没确定子序头，lock=1表示处于子序中，lock=2表示确定子序尾，一旦定下子序尾就返回上层，不再递归。通过一个树状图可以表示这个想法：<br><img src="images/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/picture1.png" alt="图1：树状图表示遍历数组"></p>
 <p>该算法时间复杂度O(n)，执行的过程如下树状图，由于一直递归到最后一个元素，从倒数第二个元素开始，每个元素以自己为首的最大子序和便可通过table记录和得知。<br><img src="images/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/picture2.png" alt="图2：一种可能的执行顺序"></p>
 <pre><code>class Solution { 
@@ -148,8 +148,8 @@ public:
     } 
 
 }; </code></pre><p>上面这个做法也可以看做每一个元素都有是子序首和不是子序首这两种操作，如果是子序首，则记录下当前子序和。</p>
-<p>方法2：自下而上的动态规划</p>
-<p>自下而上的动态规划是通过问题的最简单子问题求解复杂一些的问题并记录相关信息，最终解答整个问题，有些类似数学归纳法。在该问题中，result记录最大子序和，若想找到result的值，我们需要把所有子序遍历一遍，但全部遍历一遍时间复杂度是O(n^n)，这时就用上了动态规划的思想。<br>设dp[i]是以A[i]为尾的最大子序和，这里强调下，dp[i]的子序和，是A[i]，[A[i-1],A[i]], [A[i-2],A[i-1],A[i]], …. ,[A[0],A[1],…,A[i-1],A[i]]这个以A[i]结尾的所有子序组成的集合S中子序和最大的，换句话说，dp[i]是遍历了上述子序集合得出来的结果。<br>那么对于A[i+1]来说，dp[i+1]要么是dp[i]+A[i+1], 要么是A[i]，因为通过dp[i]这个信息，我们相当于已经将集合S中的的子序遍历了一遍了，现在对于dp[i+1]我们只需要再把A[i+1]加上遍历一下就可以了。而对于子序[A[i],A[i+1]],[A[i-1],A[i],A[i+1]], …. ,[A[0],A[1],…,A[i-1],A[i],A[i+1]]，我们无需遍历，子序和最大值就是dp[i]+A[i+1]，现在只需要再和A[i+1]比较即可。这么一来，相当于把以A[i+1]为尾的的子序集合遍历了一遍了。<br>综上所述，有如下递推关系：</p>
+<p><strong>方法2：自下而上的动态规划</strong></p>
+<p>自下而上的动态规划是通过问题的最简单子问题求解复杂一些的问题并记录相关信息，最终解答整个问题，有些类似数学归纳法。在该问题中，result记录最大子序和，若想找到result的值，我们需要把所有子序遍历一遍，但全部遍历一遍时间复杂度是O(n^n)，这时就用上了动态规划的思想。<br>设dp[i]是以A[i]为尾的最大子序和，这里强调下，dp[i]的子序和，是A[i]，[A[i-1],A[i]], [A[i-2],A[i-1],A[i]], …. ,[A[0],A[1],…,A[i-1],A[i]]这个以A[i]结尾的所有子序组成的集合S中子序和最大的，换句话说，dp[i]是遍历了上述子序集合得出来的结果。<br>那么对于A[i+1]来说，dp[i+1]要么是dp[i]+A[i+1], 要么是A[i]，因为通过dp[i]这个信息，我们相当于已经将<strong>集合S中的的子序遍历了一遍了</strong>，现在对于dp[i+1]我们只需要再把A[i+1]加上遍历一下就可以了。而对于子序[A[i],A[i+1]],[A[i-1],A[i],A[i+1]], …. ,[A[0],A[1],…,A[i-1],A[i],A[i+1]]，我们无需遍历，子序和最大值就是dp[i]+A[i+1]，现在只需要再和A[i+1]比较即可。这么一来，相当于把以A[i+1]为尾的的子序集合遍历了一遍了。<br>综上所述，有如下递推关系：</p>
 <p>dp[i] = max{A[i], dp[i-1]+A[i]} </p>
 <pre><code>class Solution { 
 
@@ -179,7 +179,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/19/最大子序和/" data-id="cjzldijrc0002u4lam9c688bn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/19/最大子序和/" data-id="cjzlqc5010002s8la0t10xr37" class="article-share-link">Share</a>
       
       
     </footer>

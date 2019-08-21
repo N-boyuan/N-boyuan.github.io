@@ -7,19 +7,20 @@
   
   <title>对于动态规划思想的理解 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）：1. 问题是求某个最优解2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题二、动态规划的两种想法：1. 自顶向下解决问题从最开始的状态开始，不同的决策最后会造成不同的">
+  <meta name="description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）： 问题是求某个最优解 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态，也就是整个问题最优解的某部分决策也是相应子问题最优解的决策 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题  二、动态规划的两种想法：1. 自顶向下解决">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对于动态规划思想的理解">
 <meta property="og:url" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）：1. 问题是求某个最优解2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题二、动态规划的两种想法：1. 自顶向下解决问题从最开始的状态开始，不同的决策最后会造成不同的">
+<meta property="og:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）： 问题是求某个最优解 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态，也就是整个问题最优解的某部分决策也是相应子问题最优解的决策 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题  二、动态规划的两种想法：1. 自顶向下解决">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png">
-<meta property="og:updated_time" content="2019-08-21T14:48:24.156Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.png">
+<meta property="og:updated_time" content="2019-08-21T20:50:12.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对于动态规划思想的理解">
-<meta name="twitter:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）：1. 问题是求某个最优解2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题二、动态规划的两种想法：1. 自顶向下解决问题从最开始的状态开始，不同的决策最后会造成不同的">
+<meta name="twitter:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）： 问题是求某个最优解 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态，也就是整个问题最优解的某部分决策也是相应子问题最优解的决策 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题  二、动态规划的两种想法：1. 自顶向下解决">
 <meta name="twitter:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -89,15 +90,69 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："><a href="#一、动态规划适用的问题特点（后续会通过例子解释这些特点）：" class="headerlink" title="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："></a>一、动态规划适用的问题特点（后续会通过例子解释这些特点）：</h1><h2 id="1-问题是求某个最优解"><a href="#1-问题是求某个最优解" class="headerlink" title="1. 问题是求某个最优解"></a>1. 问题是求某个最优解</h2><h2 id="2-问题具有最优子结构性质，即状态dp-n-的最优解有赖于dp-n-k-的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。"><a href="#2-问题具有最优子结构性质，即状态dp-n-的最优解有赖于dp-n-k-的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。" class="headerlink" title="2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。"></a>2. 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态。</h2><h2 id="3-从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题"><a href="#3-从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题" class="headerlink" title="3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题"></a>3. 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题</h2><h1 id="二、动态规划的两种想法："><a href="#二、动态规划的两种想法：" class="headerlink" title="二、动态规划的两种想法："></a>二、动态规划的两种想法：</h1><h2 id="1-自顶向下解决问题"><a href="#1-自顶向下解决问题" class="headerlink" title="1. 自顶向下解决问题"></a>1. 自顶向下解决问题</h2><p>从最开始的状态开始，不同的决策最后会造成不同的系统状态。这样的想法像一个二叉树一样，下图展示的是每个状态有两种决策的情况，可以看出这样的方法在<strong>写程序的时候可以考虑递归完成</strong>。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png" alt="类似二叉树的自顶向下的方法"></p>
+        <h3 id="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："><a href="#一、动态规划适用的问题特点（后续会通过例子解释这些特点）：" class="headerlink" title="一、动态规划适用的问题特点（后续会通过例子解释这些特点）："></a>一、动态规划适用的问题特点（后续会通过例子解释这些特点）：</h3><ol>
+<li>问题是求某个最优解</li>
+<li>问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态，<strong>也就是整个问题最优解的某部分决策也是相应子问题最优解的决策</strong></li>
+<li>从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题</li>
+</ol>
+<h3 id="二、动态规划的两种想法："><a href="#二、动态规划的两种想法：" class="headerlink" title="二、动态规划的两种想法："></a>二、动态规划的两种想法：</h3><h4 id="1-自顶向下解决问题"><a href="#1-自顶向下解决问题" class="headerlink" title="1. 自顶向下解决问题"></a>1. 自顶向下解决问题</h4><p>从最开始的状态开始，不同的决策最后会造成不同的系统状态。这样的想法像一个二叉树一样，下图展示的是每个状态有两种决策的情况，可以看出这样的方法在<strong>写程序的时候可以考虑递归完成</strong>。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png" alt="类似二叉树的自顶向下的方法"></p>
 <p>图中展示了每个状态通过不同的决策最后达到“叶子节点”（这并不是一个真的二叉树，挪用叶子节点的概念表达系统的最后一个状态）。这里可以看出问题有<strong>重复子结构</strong>，例如当element[0]做出决策后，element[1]会通过会继续想下做决策，最后返回给element[0]的决策者一个以element[1]当前状态为起始的最优解。当element[0]再次做出决策2时，因为<strong>问题具有最优子结构</strong>，会发现这时需要的就是element[1]为起始的最优解，而这个最优解已经在这个二叉树左侧分支计算过了，这时直接用这个最优解就可以了。这个最优解可以通过“记忆簿”记录下来。而element[0]就可以比较决策1和2哪个最优了。 </p>
-<h2 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h2><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。如n=1时，最优解是dp[1]，当n=2的时候，dp[2]可以根据dp[1]的值来比较哪种决策最佳。dp[2]通过dp[1]的到最优解的过程就是根据一个需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
+<h4 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h4><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。之前子问题的最优解等信息加上当前决策得到当前最优解，这个过程需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
 <p>红色的线表明该状态根据前面的状态做出的最优决策（具体什么决策是假设），最后得到整体最优解为，决策1-&gt;决策2-&gt;决策1-&gt;叶子节点决策。</p>
-
+<h3 id="三、例题：钢条切割问题"><a href="#三、例题：钢条切割问题" class="headerlink" title="三、例题：钢条切割问题"></a>三、例题：钢条切割问题</h3><ol>
+<li><p>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.png" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
+</li>
+<li><p>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，我们把S（i，j）定义为第i英寸到第j英寸这根钢条的最优解。S（i，n）和S（i+1,n）<strong>（前状态最优解）</strong>以及第i处是否切割<strong>（第i英寸处的决策）</strong>有关，且当前决策做出的最优解最后会转移成整个问题的最优解，例如S（1，n）下第i到第n处的决策可以得到S（i，n）；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题，就是S（i+1，n）是多少。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。</p>
+</li>
+<li><p>代码实现（C++）<br>自上而下带记忆簿的方法</p>
+<pre><code>int MemoizedCutRodAux(const int *p, int n, int *r)
+{
+    if (r[n] &gt;= 0) //数组r是记忆簿，初始的每个值都为-1
+    {
+        return r[n];
+    }
+    int q = -1;
+    if (n == 0)
+    {
+        q = 0;
+    }
+    else
+    {
+        for (int i = 1; i &lt;= n; ++i) //在每个i选择切割和不切割，并递归剩下的长度得到最优解
+        {
+            int tmp = p[i] + MemoizedCutRodAux(p, n - i, r);
+            if (q &lt; tmp)
+            {
+                q = tmp;
+            }
+        }
+    }
+    r[n] = q;
+    return q;
+}</code></pre></li>
+</ol>
+<p>自底向上的动态规划</p>
+<pre><code>int BottomUp(int n, int* p)
+{
+    for (int i = 1; i &lt; n + 1; i++)
+    {
+        int tempMaxPrice = 0;
+        for (int j = 1; j &lt;= i; j++) //下面取得钢条长度为i的时候的最大收益
+        {
+            int maxPrice = p[j] + result[i - j];
+            if (maxPrice &gt; tempMaxPrice)
+            {
+                tempMaxPrice = maxPrice;
+            }
+        }
+        result[i] = tempMaxPrice;
+    }
+    return result[n];
+}</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzldijr90001u4la3dmmqdbt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzlqc4zs0000s8lao02myls3" class="article-share-link">Share</a>
       
       
     </footer>
