@@ -16,9 +16,9 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.png">
-<meta property="og:updated_time" content="2019-08-21T22:10:19.647Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/对于动态规划思想的理解/images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.PNG">
+<meta property="og:updated_time" content="2019-08-21T22:19:09.164Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对于动态规划思想的理解">
 <meta name="twitter:description" content="一、动态规划适用的问题特点（后续会通过例子解释这些特点）： 问题是求某个最优解 问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态， 从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题  二、动态规划的两种想法： 动态规划在题目中的作用很大程度是遍历所有结果，并且省去很多不用再次遍历的情">
@@ -102,9 +102,9 @@
 <h4 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h4><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。之前子问题的最优解等信息加上当前决策得到当前最优解，这个过程需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
 <p>红色的线表明该状态根据前面的状态做出的最优决策（具体什么决策是假设），最后得到整体最优解为，决策1-&gt;决策2-&gt;决策1-&gt;叶子节点决策。</p>
 <h3 id="三、例题：钢条切割问题"><a href="#三、例题：钢条切割问题" class="headerlink" title="三、例题：钢条切割问题"></a>三、例题：钢条切割问题</h3><ol>
-<li><p>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.png" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
+<li><p>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.PNG" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
 </li>
-<li><p>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，一个长度n的钢条可以根据n-1，n-2…1这些子情况得出最优解，且当前决策做出的最优解最后会转移成整个问题的最优解，不用考虑n+1得情况；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。<br>下图是这个题目的模型，节点内容表示钢条长度：<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.png" alt="钢条问题树状模型"></p>
+<li><p>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，一个长度n的钢条可以根据n-1，n-2…1这些子情况得出最优解，且当前决策做出的最优解最后会转移成整个问题的最优解，不用考虑n+1得情况；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。<br>下图是这个题目的模型，节点内容表示钢条长度：<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.PNG" alt="钢条问题树状模型"></p>
 </li>
 <li><p>代码实现（C++）<br>自上而下带记忆簿的方法</p>
 <pre><code>int MemoizedCutRodAux(const int *p, int n, int *r)
@@ -154,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzltbsg40002uolaowjk5ga8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzltkck40001msladziq4q8p" class="article-share-link">Share</a>
       
       
     </footer>
