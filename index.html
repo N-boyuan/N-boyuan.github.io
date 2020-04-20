@@ -62,6 +62,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-动态规划：买卖股票的最佳时机" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/20/动态规划：买卖股票的最佳时机/" class="article-date">
+  <time datetime="2020-04-20T03:37:08.000Z" itemprop="datePublished">2020-04-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/动态规划：买卖股票的最佳时机/">动态规划：买卖股票的最佳时机</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h2><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>注意：你不能在买入股票前卖出股票</p>
+<p>示例 1:</p>
+<p>输入: [7,1,5,3,6,4]<br>输出: 5<br>解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。</p>
+<p>示例 2:</p>
+<p>输入: [7,6,4,3,1]<br>输出: 0<br>解释: 在这种情况下, 没有交易完成, 所以最大利润为 0</p>
+<p>题目链接：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">买卖股票的最佳时机</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h2><p>股票买卖只有一次，最直接想到的不用思考的暴力解法是第i=1天买，第j（j=2，3，……，N）天卖，记录下最大值，第i=2天买，第j（j=3，4，……，N）天卖，以此类推。时间复杂度为O(n^2)。此时我们可以通过动态规划来省去一些情况的讨论。</p>
+<p>首先我们讨论对于有N天价位的输入数列prices，如果我们最后一天卖，不论什么时间买，能获得最大收益是多少。这时我们需要知道N-1天卖的时候的最大收益dp[N-1]，则<strong>dp[N]=max(dp[N-1]+prices[N]-prices[N-1], 0)，注意：式子中的0是prices[N]-prices[N]，即没有买卖操作，相当于当天买当天卖</strong>。式子的含义是，第N天卖最大收益等于N-1天最大收益加上这两天的差价与0的最大值，例如对于第N-1天卖股票的情况，当i(1≤i≤N-1)天买入时可获最大收益dp[N-1]，那么对于第N天，还是从第j天开始买入，只不过这次是第N天在卖出，如果这个利润大于0，那么这就是dp[N]，否则dp[N]=0。</p>
+<p>遍历prices，可得到第i(i=1,2,……,N)天卖出时能得到的最大收益，再从中选取最大值，就是最后的答案。在暴力解法中，我们遍历了第i天买，第j天卖的每一种情况，而在动态规划中，我们直接得到第j天卖时的最大值，省去了找哪一天买能得到最大值的过程，将时间复杂度缩短为O(n)。</p>
+<p>对于这个结论的证明，可以采用反证法：</p>
+<ol>
+<li>当dp[N-1]+prices[N]-prices[N-1]&gt;0, 假设dp[N]!=dp[N-1]+prices[N]-prices[N-1]，其中dp[N-1]=prices[N-1]-prices[i],而是有m!=i，1≤m≤N-1，使得dp[N]最大；</li>
+<li>那么dp[N]=prices[N]-prices[m]=prices[N]-prices[N-1]+prices[N-1]-prices[m]；</li>
+<li>由假设和结论（第1,2条）可知，dp[N]=prices[N]-prices[N-1]+prices[N-1]-prices[m] &gt; dp[N-1]+prices[N]-prices[N-1]=prices[N-1]-prices[i]+prices[N]-prices[N-1],两边消去prices[N]-prices[N-1]，则prices[N-1]-prices[m] &gt; prices[N-1]-prices[i]；</li>
+<li>dp[N-1]定义为N-1天卖出的最大值，dp[N-1]=prices[N-1]-prices[i]，而第3条中可以找到比dp[N-1]更大的值，说明假设错误，即dp[N]=dp[N-1]+prices[N]-prices[N-1]是正确的。</li>
+</ol>
+<p>当dp[N-1]+prices[N]-prices[N-1]≤0，显而易见，不买不卖收入为0最大.</p>
+<h2 id="C-解答"><a href="#C-解答" class="headerlink" title="C++解答"></a><strong>C++解答</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxProfit(vector&lt;int&gt;&amp; prices) &#123;</span><br><span class="line">        if(prices.size()&lt;2) return 0;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=0;</span><br><span class="line">        for(int i=1;i&lt;prices.size();i++)&#123;</span><br><span class="line">            if(dp+prices[i]-prices[i-1] &gt; 0)&#123;</span><br><span class="line">                dp+=prices[i]-prices[i-1];</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                dp=0;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类似例题"><a href="#类似例题" class="headerlink" title="类似例题"></a><strong>类似例题</strong></h2><p>最大子序和也可以用这种思路解，</p>
+<p><strong>题目</strong>：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
+<p>示例:</p>
+<blockquote>
+<p>输入: [-2,1,-3,4,-1,2,1,-5,4],<br>输出: 6<br>解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
+</blockquote>
+<p><strong>C++解答</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxSubArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=INT_MIN;</span><br><span class="line">        for(int i:nums)&#123;</span><br><span class="line">            if(dp+i&gt;i) &#123;</span><br><span class="line">                dp=dp+i;</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                dp=i;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/20/动态规划：买卖股票的最佳时机/" data-id="ck9840t2c0002tglabf2ua95g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-对于动态规划思想的理解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/21/对于动态规划思想的理解/" class="article-date">
@@ -95,9 +159,9 @@
 <h4 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h4><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。之前子问题的最优解等信息加上当前决策得到当前最优解，这个过程需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
 <p>红色的线表明该状态根据前面的状态做出的最优决策（具体什么决策是假设），最后得到整体最优解为，决策1-&gt;决策2-&gt;决策1-&gt;叶子节点决策。</p>
 <h3 id="三、例题：钢条切割问题"><a href="#三、例题：钢条切割问题" class="headerlink" title="三、例题：钢条切割问题"></a>三、例题：钢条切割问题</h3><ol>
-<li><p>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.PNG" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
+<li><p>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.jpg" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
 </li>
-<li><p>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，一个长度n的钢条可以根据n-1，n-2…1这些子情况得出最优解，且当前决策做出的最优解最后会转移成整个问题的最优解，不用考虑n+1得情况；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。<br>下图是这个题目的模型，节点内容表示钢条长度：<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.PNG" alt="钢条问题树状模型"></p>
+<li><p>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，一个长度n的钢条可以根据n-1，n-2…1这些子情况得出最优解，且当前决策做出的最优解最后会转移成整个问题的最优解，不用考虑n+1得情况；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。<br>下图是这个题目的模型，节点内容表示钢条长度：<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.jpg" alt="钢条问题树状模型"></p>
 </li>
 <li><p>代码实现（C++）<br>自上而下带记忆簿的方法</p>
 <pre><code>int MemoizedCutRodAux(const int *p, int n, int *r)
@@ -147,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="cjzltlch10002y0laoyeog397" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="ck9840t2p0003tglakme3t3cq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -157,9 +221,9 @@
 
 
   
-    <article id="post-最大子序和" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-动态规划：最大子序和" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/08/19/最大子序和/" class="article-date">
+    <a href="/2019/08/19/动态规划：最大子序和/" class="article-date">
   <time datetime="2019-08-18T22:08:56.000Z" itemprop="datePublished">2019-08-19</time>
 </a>
     
@@ -171,7 +235,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/19/最大子序和/">最大子序和</a>
+      <a class="article-title" href="/2019/08/19/动态规划：最大子序和/">最大子序和</a>
     </h1>
   
 
@@ -269,7 +333,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/19/最大子序和/" data-id="cjzltlcgz0001y0lazo8im5pb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/19/动态规划：最大子序和/" data-id="ck9840t290001tglavhcl3t5m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -318,7 +382,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/16/hello-world/" data-id="cjzltlcgs0000y0lasusl3zsg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/16/hello-world/" data-id="ck9840t240000tglag8k8ym22" class="article-share-link">Share</a>
       
       
     </footer>
@@ -346,7 +410,7 @@ public:
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
     </div>
   </div>
 
@@ -359,11 +423,15 @@ public:
       <ul>
         
           <li>
+            <a href="/2020/04/20/动态规划：买卖股票的最佳时机/">动态规划：买卖股票的最佳时机</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/21/对于动态规划思想的理解/">对于动态规划思想的理解</a>
           </li>
         
           <li>
-            <a href="/2019/08/19/最大子序和/">最大子序和</a>
+            <a href="/2019/08/19/动态规划：最大子序和/">最大子序和</a>
           </li>
         
           <li>
@@ -382,7 +450,7 @@ public:
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 John Doe<br>
+      &copy; 2020 John Doe<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

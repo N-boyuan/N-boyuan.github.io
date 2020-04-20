@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>动态规划：买卖股票的最佳时机 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。注意：你不能在买入股票前卖出股票 示例 1: 输入: [7,1,5,3,6,4]输出: 5解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。注意利润不能是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划：买卖股票的最佳时机">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/动态规划：买卖股票的最佳时机/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="题目给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。注意：你不能在买入股票前卖出股票 示例 1: 输入: [7,1,5,3,6,4]输出: 5解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。注意利润不能是">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-20T06:58:08.812Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划：买卖股票的最佳时机">
+<meta name="twitter:description" content="题目给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。注意：你不能在买入股票前卖出股票 示例 1: 输入: [7,1,5,3,6,4]输出: 5解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。注意利润不能是">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-动态规划：买卖股票的最佳时机" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/20/动态规划：买卖股票的最佳时机/" class="article-date">
+  <time datetime="2020-04-20T03:37:08.000Z" itemprop="datePublished">2020-04-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      动态规划：买卖股票的最佳时机
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h2><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>注意：你不能在买入股票前卖出股票</p>
+<p>示例 1:</p>
+<p>输入: [7,1,5,3,6,4]<br>输出: 5<br>解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。</p>
+<p>示例 2:</p>
+<p>输入: [7,6,4,3,1]<br>输出: 0<br>解释: 在这种情况下, 没有交易完成, 所以最大利润为 0</p>
+<p>题目链接：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">买卖股票的最佳时机</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h2><p>股票买卖只有一次，最直接想到的不用思考的暴力解法是第i=1天买，第j（j=2，3，……，N）天卖，记录下最大值，第i=2天买，第j（j=3，4，……，N）天卖，以此类推。时间复杂度为O(n^2)。此时我们可以通过动态规划来省去一些情况的讨论。</p>
+<p>首先我们讨论对于有N天价位的输入数列prices，如果我们最后一天卖，不论什么时间买，能获得最大收益是多少。这时我们需要知道N-1天卖的时候的最大收益dp[N-1]，则<strong>dp[N]=max(dp[N-1]+prices[N]-prices[N-1], 0)，注意：式子中的0是prices[N]-prices[N]，即没有买卖操作，相当于当天买当天卖</strong>。式子的含义是，第N天卖最大收益等于N-1天最大收益加上这两天的差价与0的最大值，例如对于第N-1天卖股票的情况，当i(1≤i≤N-1)天买入时可获最大收益dp[N-1]，那么对于第N天，还是从第j天开始买入，只不过这次是第N天在卖出，如果这个利润大于0，那么这就是dp[N]，否则dp[N]=0。</p>
+<p>遍历prices，可得到第i(i=1,2,……,N)天卖出时能得到的最大收益，再从中选取最大值，就是最后的答案。在暴力解法中，我们遍历了第i天买，第j天卖的每一种情况，而在动态规划中，我们直接得到第j天卖时的最大值，省去了找哪一天买能得到最大值的过程，将时间复杂度缩短为O(n)。</p>
+<p>对于这个结论的证明，可以采用反证法：</p>
+<ol>
+<li>当dp[N-1]+prices[N]-prices[N-1]&gt;0, 假设dp[N]!=dp[N-1]+prices[N]-prices[N-1]，其中dp[N-1]=prices[N-1]-prices[i],而是有m!=i，1≤m≤N-1，使得dp[N]最大；</li>
+<li>那么dp[N]=prices[N]-prices[m]=prices[N]-prices[N-1]+prices[N-1]-prices[m]；</li>
+<li>由假设和结论（第1,2条）可知，dp[N]=prices[N]-prices[N-1]+prices[N-1]-prices[m] &gt; dp[N-1]+prices[N]-prices[N-1]=prices[N-1]-prices[i]+prices[N]-prices[N-1],两边消去prices[N]-prices[N-1]，则prices[N-1]-prices[m] &gt; prices[N-1]-prices[i]；</li>
+<li>dp[N-1]定义为N-1天卖出的最大值，dp[N-1]=prices[N-1]-prices[i]，而第3条中可以找到比dp[N-1]更大的值，说明假设错误，即dp[N]=dp[N-1]+prices[N]-prices[N-1]是正确的。</li>
+</ol>
+<p>当dp[N-1]+prices[N]-prices[N-1]≤0，显而易见，不买不卖收入为0最大.</p>
+<h2 id="C-解答"><a href="#C-解答" class="headerlink" title="C++解答"></a><strong>C++解答</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxProfit(vector&lt;int&gt;&amp; prices) &#123;</span><br><span class="line">        if(prices.size()&lt;2) return 0;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=0;</span><br><span class="line">        for(int i=1;i&lt;prices.size();i++)&#123;</span><br><span class="line">            if(dp+prices[i]-prices[i-1] &gt; 0)&#123;</span><br><span class="line">                dp+=prices[i]-prices[i-1];</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                dp=0;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类似例题"><a href="#类似例题" class="headerlink" title="类似例题"></a><strong>类似例题</strong></h2><p>最大子序和也可以用这种思路解，</p>
+<p><strong>题目</strong>：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
+<p>示例:</p>
+<blockquote>
+<p>输入: [-2,1,-3,4,-1,2,1,-5,4],<br>输出: 6<br>解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
+</blockquote>
+<p><strong>C++解答</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxSubArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=INT_MIN;</span><br><span class="line">        for(int i:nums)&#123;</span><br><span class="line">            if(dp+i&gt;i) &#123;</span><br><span class="line">                dp=dp+i;</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                dp=i;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/20/动态规划：买卖股票的最佳时机/" data-id="ck9840t2c0002tglabf2ua95g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/21/对于动态规划思想的理解/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">对于动态规划思想的理解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/20/动态规划：买卖股票的最佳时机/">动态规划：买卖股票的最佳时机</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/21/对于动态规划思想的理解/">对于动态规划思想的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/19/动态规划：最大子序和/">最大子序和</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/16/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
