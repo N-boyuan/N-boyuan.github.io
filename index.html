@@ -62,6 +62,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-动态规划：最长公共子序列" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/21/动态规划：最长公共子序列/" class="article-date">
+  <time datetime="2020-04-21T05:17:20.000Z" itemprop="datePublished">2020-04-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/21/动态规划：最长公共子序列/">动态规划：最长公共子序列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定两个字符串 text1和 text2，返回这两个字符串的最长公共子序列。一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。例如，”ace” 是 “abcde” 的子序列，但 “aec” 不是 “abcde” 的子序列。两个字符串的「公共子序列」是这两个字符串所共同拥有的子序列。若这两个字符串没有公共子序列，则返回 0。</p>
+<p>示例 1:</p>
+<p>输入：text1 = “abcde”, text2 = “ace”<br>输出：3<br>解释：最长公共子序列是 “ace”，它的长度为 3。</p>
+<p>示例 2:</p>
+<p>输入：text1 = “abc”, text2 = “abc”<br>输出：3<br>解释：最长公共子序列是 “abc”，它的长度为 3。</p>
+<p>示例 3:</p>
+<p>输入：text1 = “abc”, text2 = “def”<br>输出：0<br>解释：两个字符串没有公共子序列，返回 0。</p>
+<p>题目链接：<a href="https://leetcode-cn.com/problems/longest-common-subsequence" target="_blank" rel="noopener">最长公共子序列</a></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>这个题目是Longest Common Subsequence，简称LCS问题，是一个典型的二维动态规划问题。题目中有两个字符串，有两个dp量，也就是两个字符串的状态需要考虑。如果穷举每个情况的话，会有m^n个情况发生(m和n分别是两个字符串的长度)，所以需要动态规划来省去一些情况的讨论，<strong>注意，在买卖股票的最佳时机中也提到过动态规划帮助减少穷举讨论的情况，其实动态规划算法做的就是穷举 + 剪枝。</strong></p>
+<p>现在来看这道题，对于LCS问题，普遍做法为，<br><strong>1. 确定dp数组的含义</strong><br>dp[i][j]表示，text1.substr(0,i-1)与text2.substr(0,j-1)的最长公共子序列，这样对于dp[i+1][j+1]就可以通过dp[i+1][j]和dp[i][j+1]还有dp[i][j]得到了。</p>
+<div align="center">
+
+<p><img src="images/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/dptable.png" alt="dp数组"></p>
+</div>
+
+<p><strong>2. 确定base case</strong><br>对于dp数组的第0行第0列，我们将其定义为空字符串，它的值是0。例如“”和“abc”的LCS是空字符串“”，长度也为0。确定了base case后，我们就可以通过动态规划算法正常求解，不用在dp[1][j]和dp[i][1]这些值的计算中再为边界情况特殊考虑了。</p>
+<p>**3. 确定状态转移方程<br>那么dp值如何通过之前的LCS的长度得到呢？这里有三种情况，第一种，当text1[i]和text2[j]相等时，那么text1[i]和text2[j]肯定都参与了LCS的匹配，且二者就是互相匹配的情况，则dp[i+1][j+1]=dp[i][j]+1。例如abc与ac，因为text1[2]=text2[1]，所以abc与ac的LCS等于ab与a的LCS加上1；第二种情况，当text1[i]和text2[j]不相等时，且二者其中有一个参与了LCS的匹配（由于二者不相等，一定不可能同时参与LCS的匹配），这时候dp[i+1][j+1]=max(dp[i+1][j],dp[i][j+1])。例如abc与ace，c与e不等，ab与ace的LCS长度为1，其中e没有参与匹配，abc与ac的LCS长度为2，其中c参加了匹配，则abc与ace的LCS长度是dp[i+1][j],dp[i][j+1]中的最大值。</p>
+<h1 id="C-解答"><a href="#C-解答" class="headerlink" title="C++解答"></a>C++解答</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int longestCommonSubsequence(string text1, string text2) &#123;</span><br><span class="line">        int m=text2.size(), n=text1.size();</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; dp(n+1,vector&lt;int&gt;(m+1,0));</span><br><span class="line">        for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">            for(int j=0;j&lt;m;j++)&#123;</span><br><span class="line">                if(text1[i]==text2[j])&#123;</span><br><span class="line">                    dp[i+1][j+1]=dp[i][j]+1;</span><br><span class="line">                &#125;</span><br><span class="line">                else &#123;</span><br><span class="line">                    dp[i+1][j+1]=max(dp[i+1][j],dp[i][j+1]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[n][m];</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="相似问题"><a href="#相似问题" class="headerlink" title="相似问题"></a>相似问题</h1><p><strong>题目</strong>：礼物的最大价值。在一个 m*n个情况发生的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于0）。你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格、直到到达棋盘的右下角。给定一个棋盘及其上面的礼物的价值，请计算你最多能拿到多少价值的礼物？</p>
+<p>题目链接：<a href="https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof" target="_blank" rel="noopener">礼物的最大价值</a></p>
+<p><strong>分析</strong>：这是一个二维动态规划的问题，设棋盘数组为gift，首先确定dp数组的含义，dp[i+1][j+1]是移动到棋盘的（i，j）位置时能拿到的最大价值；其次确定base case，对于dp的第0行第0列，其价值为0，相当于在棋盘第一行第一列的上面和下面在加一行和一列，上面礼物价值为0，这样在计算真正的第一行第一列的时候可以根据base case正常计算，不用特殊讨论了；最后确定状态转移方程，在棋盘上，只能向下和向右移动，对于dp[i+1][j+1]的值，很容易想到dp[i+1][j+1]=max(dp[i+1][j],dp[i][j+1])+gift[i][j];</p>
+<p><strong>C++解答</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">int maxValue(vector&lt;vector&lt;int&gt;&gt;&amp; grid) &#123;</span><br><span class="line">        int m=grid.size(),n=grid[0].size();</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; dp(m+1,vector&lt;int&gt;(n+1,0));</span><br><span class="line">        for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">            for(int j=0;j&lt;n;j++)&#123;</span><br><span class="line">                dp[i+1][j+1]=grid[i][j]+max(dp[i][j+1],dp[i+1][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/21/动态规划：最长公共子序列/" data-id="ck9acc00v000014lajo0fvtmp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-动态规划：买卖股票的最佳时机" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/20/动态规划：买卖股票的最佳时机/" class="article-date">
@@ -84,13 +153,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h2><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>注意：你不能在买入股票前卖出股票</p>
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h1><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。<br>注意：你不能在买入股票前卖出股票</p>
 <p>示例 1:</p>
 <p>输入: [7,1,5,3,6,4]<br>输出: 5<br>解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。</p>
 <p>示例 2:</p>
 <p>输入: [7,6,4,3,1]<br>输出: 0<br>解释: 在这种情况下, 没有交易完成, 所以最大利润为 0</p>
 <p>题目链接：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">买卖股票的最佳时机</a></p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h2><p>股票买卖只有一次，最直接想到的不用思考的暴力解法是第i=1天买，第j（j=2，3，……，N）天卖，记录下最大值，第i=2天买，第j（j=3，4，……，N）天卖，以此类推。时间复杂度为O(n^2)。此时我们可以通过动态规划来省去一些情况的讨论。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h1><p>股票买卖只有一次，最直接想到的不用思考的暴力解法是第i=1天买，第j（j=2，3，……，N）天卖，记录下最大值，第i=2天买，第j（j=3，4，……，N）天卖，以此类推。时间复杂度为O(n^2)。此时我们可以通过动态规划来省去一些情况的讨论。</p>
 <p>首先我们讨论对于有N天价位的输入数列prices，如果我们最后一天卖，不论什么时间买，能获得最大收益是多少。这时我们需要知道N-1天卖的时候的最大收益dp[N-1]，则<strong>dp[N]=max(dp[N-1]+prices[N]-prices[N-1], 0)，注意：式子中的0是prices[N]-prices[N]，即没有买卖操作，相当于当天买当天卖</strong>。式子的含义是，第N天卖最大收益等于N-1天最大收益加上这两天的差价与0的最大值，例如对于第N-1天卖股票的情况，当i(1≤i≤N-1)天买入时可获最大收益dp[N-1]，那么对于第N天，还是从第j天开始买入，只不过这次是第N天在卖出，如果这个利润大于0，那么这就是dp[N]，否则dp[N]=0。</p>
 <p>遍历prices，可得到第i(i=1,2,……,N)天卖出时能得到的最大收益，再从中选取最大值，就是最后的答案。在暴力解法中，我们遍历了第i天买，第j天卖的每一种情况，而在动态规划中，我们直接得到第j天卖时的最大值，省去了找哪一天买能得到最大值的过程，将时间复杂度缩短为O(n)。</p>
 <p>对于这个结论的证明，可以采用反证法：</p>
@@ -101,22 +170,20 @@
 <li>dp[N-1]定义为N-1天卖出的最大值，dp[N-1]=prices[N-1]-prices[i]，而第3条中可以找到比dp[N-1]更大的值，说明假设错误，即dp[N]=dp[N-1]+prices[N]-prices[N-1]是正确的。</li>
 </ol>
 <p>当dp[N-1]+prices[N]-prices[N-1]≤0，显而易见，不买不卖收入为0最大.</p>
-<h2 id="C-解答"><a href="#C-解答" class="headerlink" title="C++解答"></a><strong>C++解答</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxProfit(vector&lt;int&gt;&amp; prices) &#123;</span><br><span class="line">        if(prices.size()&lt;2) return 0;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=0;</span><br><span class="line">        for(int i=1;i&lt;prices.size();i++)&#123;</span><br><span class="line">            if(dp+prices[i]-prices[i-1] &gt; 0)&#123;</span><br><span class="line">                dp+=prices[i]-prices[i-1];</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                dp=0;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="C-解答"><a href="#C-解答" class="headerlink" title="C++解答"></a><strong>C++解答</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxProfit(vector&lt;int&gt;&amp; prices) &#123;</span><br><span class="line">        if(prices.size()&lt;2) return 0;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=0;</span><br><span class="line">        for(int i=1;i&lt;prices.size();i++)&#123;</span><br><span class="line">            if(dp+prices[i]-prices[i-1] &gt; 0)&#123;</span><br><span class="line">                dp+=prices[i]-prices[i-1];</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                dp=0;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h2 id="类似例题"><a href="#类似例题" class="headerlink" title="类似例题"></a><strong>类似例题</strong></h2><p>最大子序和也可以用这种思路解，</p>
+<h1 id="类似例题"><a href="#类似例题" class="headerlink" title="类似例题"></a><strong>类似例题</strong></h1><p>最大子序和也可以用这种思路解，</p>
 <p><strong>题目</strong>：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
-<p>示例:</p>
-<blockquote>
+<p>示例:    </p>
 <p>输入: [-2,1,-3,4,-1,2,1,-5,4],<br>输出: 6<br>解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
-</blockquote>
 <p><strong>C++解答</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxSubArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=INT_MIN;</span><br><span class="line">        for(int i:nums)&#123;</span><br><span class="line">            if(dp+i&gt;i) &#123;</span><br><span class="line">                dp=dp+i;</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                dp=i;</span><br><span class="line">            &#125;</span><br><span class="line">            m=max(m,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxSubArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int dp=0;</span><br><span class="line">        int m=INT_MIN;</span><br><span class="line">        for(int i:nums)&#123;</span><br><span class="line">        if(dp+i&gt;i) &#123;</span><br><span class="line">            dp=dp+i;</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            dp=i;</span><br><span class="line">        &#125;</span><br><span class="line">        m=max(m,dp);</span><br><span class="line">    &#125;</span><br><span class="line">    return m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/20/动态规划：买卖股票的最佳时机/" data-id="ck9840t2c0002tglabf2ua95g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/20/动态规划：买卖股票的最佳时机/" data-id="ck9acc01e000314labnq8ub1u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -153,65 +220,50 @@
 <li>问题具有最优子结构性质，即状态dp(n)的最优解有赖于dp(n - k)的最优解，n状态根据子问题根据子问题最优解做出的决策就是最优的，不用考虑后续的状态，</li>
 <li>从问题某个状态向下考虑，采用不同的策略可以拆成重叠的子问题</li>
 </ol>
-<h3 id="二、动态规划的两种想法："><a href="#二、动态规划的两种想法：" class="headerlink" title="二、动态规划的两种想法："></a>二、动态规划的两种想法：</h3><p> 动态规划在题目中的作用很大程度是<strong>遍历所有结果，并且省去很多不用再次遍历的情况，最后从“遍历的所有结果”中找到最优</strong>。下面介绍动态规划两种方法。</p>
-<h4 id="1-自顶向下解决问题"><a href="#1-自顶向下解决问题" class="headerlink" title="1. 自顶向下解决问题"></a>1. 自顶向下解决问题</h4><p>从最开始的状态开始，不同的决策最后会造成不同的系统状态。这样的想法像一个二叉树一样，下图展示的是每个状态有两种决策的情况，可以看出这样的方法在<strong>写程序的时候可以考虑递归完成</strong>。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png" alt="类似二叉树的自顶向下的方法"></p>
+<h3 id="二、动态规划的两种想法："><a href="#二、动态规划的两种想法：" class="headerlink" title="二、动态规划的两种想法："></a>二、动态规划的两种想法：</h3><p>动态规划在题目中的作用很大程度是<strong>遍历所有结果，并且省去很多不用再次遍历的情况，最后从“遍历的所有结果”中找到最优</strong>。下面介绍动态规划两种方法。</p>
+<h4 id="1-自顶向下解决问题"><a href="#1-自顶向下解决问题" class="headerlink" title="1. 自顶向下解决问题"></a>1. 自顶向下解决问题</h4><p>从最开始的状态开始，不同的决策最后会造成不同的系统状态。这样的想法像一个二叉树一样，下图展示的是每个状态有两种决策的情况，可以看出这样的方法在<strong>写程序的时候可以考虑递归完成</strong>。</p>
+<div align="center"> 
+
+<p><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture1.png" alt="类似二叉树的自顶向下的方法"> </p>
+</div>
+
 <p>图中展示了每个状态通过不同的决策最后达到“叶子节点”（这并不是一个真的二叉树，挪用叶子节点的概念表达系统的最后一个状态）。这里可以看出问题有<strong>重复子结构</strong>，例如当element[0]做出决策后，element[1]会通过会继续想下做决策，最后返回给element[0]的决策者一个以element[1]当前状态为起始的最优解。当element[0]再次做出决策2时，因为<strong>问题具有最优子结构</strong>，会发现这时需要的就是element[1]为起始的最优解，而这个最优解已经在这个二叉树左侧分支计算过了，这时直接用这个最优解就可以了。这个最优解可以通过“记忆簿”记录下来。而element[0]就可以比较决策1和2哪个最优了。 </p>
-<h4 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h4><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。<br>从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。之前子问题的最优解等信息加上当前决策得到当前最优解，这个过程需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
+<h4 id="2-自底向上动态规划"><a href="#2-自底向上动态规划" class="headerlink" title="2. 自底向上动态规划"></a>2. 自底向上动态规划</h4><p>自底向上是动态规划最常用的方法，个人认为效率自上而下的方法下率高。从最简单的子结构开始（n=1），思考当问题变得复杂的时候（n=2,3,…i），最佳解决方案是什么。之前子问题的最优解等信息加上当前决策得到当前最优解，这个过程需要根据题目自己得出的<strong>状态转移方程</strong>。这样就可一直计算到n = N，得到整体最优解（<strong>这是问题具有最优子结构的性质</strong>）。如下图，从element[3],也就是”叶子节点“开始，这个只有一个元素的情况下可以很直观的得到答案，接着假设element[2]根据element[3]得到自己的最优决策是决策1，这样，{element[2],element[3]}这个问题的最优就得到了。</p>
+<div align="center"> 
+
+<p><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture2.png" alt="自底向上方法过程图示"></p>
+</div>
+
 <p>红色的线表明该状态根据前面的状态做出的最优决策（具体什么决策是假设），最后得到整体最优解为，决策1-&gt;决策2-&gt;决策1-&gt;叶子节点决策。</p>
 <h3 id="三、例题：钢条切割问题"><a href="#三、例题：钢条切割问题" class="headerlink" title="三、例题：钢条切割问题"></a>三、例题：钢条切割问题</h3><ol>
-<li><p>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.jpg" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
+<li>题目<br>公司购买长钢条，将其切割为短钢条出售。切割工序本身没有成本支出。公司管理层希望知道最佳的切割方案。假定我们知道公司出售一段长为i英寸的钢条的价格为pi(i=1,2,…，单位为美元)。钢条的长度均为整英寸。图15-1给出了一个价格表的样例。<div align="center">
+
+</div></li>
+</ol>
+<p><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture3.jpg" alt="钢条价格表，i英寸长的钢条对应Pi美元"></p>
+
+
+<ol start="2">
+<li>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，一个长度n的钢条可以根据n-1，n-2…1这些子情况得出最优解，且当前决策做出的最优解最后会转移成整个问题的最优解，不用考虑n+1得情况；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。<br>下图是这个题目的模型，节点内容表示钢条长度：<div align="center">
+
+</div></li>
+</ol>
+<p><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.jpg" alt="钢条问题树状模型"></p>
+
+
+<ol start="3">
+<li>代码实现（C++）<br>自上而下带记忆簿的方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int MemoizedCutRodAux(const int *p, int n, int *r)</span><br><span class="line">&#123;</span><br><span class="line">    if (r[n] &gt;= 0) //数组r是记忆簿，初始的每个值都为-1</span><br><span class="line">    &#123;</span><br><span class="line">        return r[n];</span><br><span class="line">    &#125;</span><br><span class="line">    int q = -1;</span><br><span class="line">    if (n == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        q = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 1; i &lt;= n; ++i) //在每个i选择切割和不切割，并递归剩下的长度得到最优解</span><br><span class="line">        &#123;</span><br><span class="line">            int tmp = p[i] + MemoizedCutRodAux(p, n - i, r);</span><br><span class="line">            if (q &lt; tmp)</span><br><span class="line">            &#123;</span><br><span class="line">                q = tmp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    r[n] = q;</span><br><span class="line">    return q;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>题目分析<br>一根长n英寸的钢条有2^(n-1)种切割方法，即在每个一英寸处可以选择切割或者不切割，暴力解法是把所有情况都遍历一遍，这样的话就是O(2^n)的时间复杂度，这样显然不可取。现在分析这个问题，首先，这个问题是<strong>求某个最优解</strong>也就是最大收益；其次，这个问题有<strong>最优子结构性质</strong>，一个长度n的钢条可以根据n-1，n-2…1这些子情况得出最优解，且当前决策做出的最优解最后会转移成整个问题的最优解，不用考虑n+1得情况；最后，该问题有重叠子问题，第i点切不切都要面对相同的子问题。由此，这道题可以通过动态规划求解，其递归方程：Rn = ∑(i:1-&gt;n)max（Pi + Rn-i）。<br>下图是这个题目的模型，节点内容表示钢条长度：<br><img src="images/%E5%AF%B9%E4%BA%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3%E7%9A%84%E7%90%86%E8%A7%A3/picture4.jpg" alt="钢条问题树状模型"></p>
-</li>
-<li><p>代码实现（C++）<br>自上而下带记忆簿的方法</p>
-<pre><code>int MemoizedCutRodAux(const int *p, int n, int *r)
-{
-    if (r[n] &gt;= 0) //数组r是记忆簿，初始的每个值都为-1
-    {
-        return r[n];
-    }
-    int q = -1;
-    if (n == 0)
-    {
-        q = 0;
-    }
-    else
-    {
-        for (int i = 1; i &lt;= n; ++i) //在每个i选择切割和不切割，并递归剩下的长度得到最优解
-        {
-            int tmp = p[i] + MemoizedCutRodAux(p, n - i, r);
-            if (q &lt; tmp)
-            {
-                q = tmp;
-            }
-        }
-    }
-    r[n] = q;
-    return q;
-}</code></pre></li>
 </ol>
 <p>自底向上的动态规划</p>
-<pre><code>int BottomUp(int n, int* p)
-{
-    for (int i = 1; i &lt; n + 1; i++)
-    {
-        int tempMaxPrice = 0;
-        for (int j = 1; j &lt;= i; j++) //下面取得钢条长度为i的时候的最大收益
-        {
-            int maxPrice = p[j] + result[i - j];
-            if (maxPrice &gt; tempMaxPrice)
-            {
-                tempMaxPrice = maxPrice;
-            }
-        }
-        result[i] = tempMaxPrice;
-    }
-    return result[n];
-}</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int BottomUp(int n, int* p)</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 1; i &lt; n + 1; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        int tempMaxPrice = 0;</span><br><span class="line">        for (int j = 1; j &lt;= i; j++) //下面取得钢条长度为i的时候的最大收益</span><br><span class="line">        &#123;</span><br><span class="line">            int maxPrice = p[j] + result[i - j];</span><br><span class="line">            if (maxPrice &gt; tempMaxPrice)</span><br><span class="line">            &#123;</span><br><span class="line">                tempMaxPrice = maxPrice;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        result[i] = tempMaxPrice;</span><br><span class="line">    &#125;</span><br><span class="line">    return result[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="ck9840t2p0003tglakme3t3cq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/21/对于动态规划思想的理解/" data-id="ck9acc01f000414lapkr03uzc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -333,7 +385,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/19/动态规划：最大子序和/" data-id="ck9840t290001tglavhcl3t5m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/19/动态规划：最大子序和/" data-id="ck9acc011000114lakgqjdead" class="article-share-link">Share</a>
       
       
     </footer>
@@ -382,7 +434,7 @@ public:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/16/hello-world/" data-id="ck9840t240000tglag8k8ym22" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/16/hello-world/" data-id="ck9acc013000214lab65h8rd8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -421,6 +473,10 @@ public:
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/04/21/动态规划：最长公共子序列/">动态规划：最长公共子序列</a>
+          </li>
         
           <li>
             <a href="/2020/04/20/动态规划：买卖股票的最佳时机/">动态规划：买卖股票的最佳时机</a>
